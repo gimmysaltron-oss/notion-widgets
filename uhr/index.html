@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Uhr</title>
+<style>
+html,body{margin:0;background:transparent;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+.w{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:6px 0;box-sizing:border-box}
+.row{display:flex;align-items:center;gap:8px}
+.card{position:relative;width:64px;height:68px;border-radius:10px;background:#ffffff;box-shadow:0 2px 6px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center}
+.card span{font-size:40px;font-weight:800;color:#111111;font-variant-numeric:tabular-nums;letter-spacing:1px}
+.card:before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(0,0,0,.12)}
+.card.flip{animation:flip .45s ease-in-out}
+@keyframes flip{0%{transform:rotateX(0)}50%{transform:rotateX(-90deg)}100%{transform:rotateX(0)}}
+.sep{font-size:32px;font-weight:800;color:#9b9a97;margin-top:-4px}
+.d{margin-top:10px;font-size:13px;font-weight:500;color:#9b9a97;letter-spacing:.2px}
+</style>
+</head>
+<body>
+<div class="w">
+  <div class="row">
+    <div class="card" id="h"><span>--</span></div><div class="sep">:</div>
+    <div class="card" id="m"><span>--</span></div><div class="sep">:</div>
+    <div class="card" id="s"><span>--</span></div>
+  </div>
+  <div class="d" id="d"></div>
+</div>
+<script>
+function setCard(id,val){var c=document.getElementById(id),s=c.firstElementChild;if(s.textContent!==val){s.textContent=val;c.classList.remove('flip');void c.offsetWidth;c.classList.add('flip');}}
+function p(v){return String(v).padStart(2,'0')}
+function tick(){var n=new Date();setCard('h',p(n.getHours()));setCard('m',p(n.getMinutes()));setCard('s',p(n.getSeconds()));
+document.getElementById('d').textContent=n.toLocaleDateString('de-DE',{weekday:'long'})+' | '+n.toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'});}
+tick();setInterval(tick,1000);
+</script>
+</body>
+</html>
